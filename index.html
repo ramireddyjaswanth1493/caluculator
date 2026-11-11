@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="A modern, minimalist dark-mode calculator built with HTML, CSS Grid, and vanilla JavaScript." />
+  <title>Minimalist iOS-Style Calculator</title>
+  
+  <!-- Modern Font: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- External Stylesheet -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- External JavaScript (loaded with defer so the HTML finishes parsing first) -->
+  <script src="script.js" defer></script>
+</head>
+<body>
+
+  <!-- Main Calculator Container -->
+  <main class="calculator" role="region" aria-label="Calculator">
+
+    <!-- 1. Display Screen (Shows current and previous calculation) -->
+    <div class="calculator-display" aria-live="polite">
+      <!-- Secondary display for the previous number and selected operator -->
+      <div class="previous-operand" id="previousOperand" aria-label="Previous input"></div>
+      <!-- Primary display for the current number being typed or the final result -->
+      <div class="current-operand" id="currentOperand" aria-label="Current result">0</div>
+    </div>
+
+    <!-- 2. Keypad Grid (Built using CSS Grid) -->
+    <div class="calculator-grid">
+      <!-- Row 1: Function Keys & Divide -->
+      <button class="btn btn-function" data-action="clear" aria-label="All Clear">AC</button>
+      <button class="btn btn-function" data-action="toggle-sign" aria-label="Toggle positive or negative">±</button>
+      <button class="btn btn-function" data-action="percent" aria-label="Percentage">%</button>
+      <button class="btn btn-operator" data-operator="÷" aria-label="Divide">÷</button>
+
+      <!-- Row 2: Numbers 7, 8, 9 & Multiply -->
+      <button class="btn btn-number" data-number="7">7</button>
+      <button class="btn btn-number" data-number="8">8</button>
+      <button class="btn btn-number" data-number="9">9</button>
+      <button class="btn btn-operator" data-operator="×" aria-label="Multiply">×</button>
+
+      <!-- Row 3: Numbers 4, 5, 6 & Subtract -->
+      <button class="btn btn-number" data-number="4">4</button>
+      <button class="btn btn-number" data-number="5">5</button>
+      <button class="btn btn-number" data-number="6">6</button>
+      <button class="btn btn-operator" data-operator="−" aria-label="Subtract">−</button>
+
+      <!-- Row 4: Numbers 1, 2, 3 & Add -->
+      <button class="btn btn-number" data-number="1">1</button>
+      <button class="btn btn-number" data-number="2">2</button>
+      <button class="btn btn-number" data-number="3">3</button>
+      <button class="btn btn-operator" data-operator="+" aria-label="Add">+</button>
+
+      <!-- Row 5: 0 (spans 2 columns), Decimal Point & Equals -->
+      <button class="btn btn-number btn-zero" data-number="0">0</button>
+      <button class="btn btn-number" data-action="decimal" aria-label="Decimal point">.</button>
+      <button class="btn btn-operator btn-equals" data-action="equals" aria-label="Calculate equals">=</button>
+    </div>
+
+  </main>
+
+</body>
+</html>

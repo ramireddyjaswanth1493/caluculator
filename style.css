@@ -1,0 +1,217 @@
+/* ==========================================================================
+   1. CSS VARIABLES & RESET
+   ========================================================================== */
+:root {
+  /* Dark Minimalist / iOS Palette */
+  --bg-page: #0a0c10;
+  --bg-calculator: #18191e;
+  --bg-display: transparent;
+
+  /* Button Color Palettes */
+  --btn-num-bg: #2a2c35;
+  --btn-num-hover: #373945;
+  --btn-num-active: #484b5c;
+  --btn-num-text: #ffffff;
+
+  --btn-func-bg: #404352;
+  --btn-func-hover: #4e5264;
+  --btn-func-active: #5f6377;
+  --btn-func-text: #f0f2f5;
+
+  --btn-op-bg: #ff9f0a;        /* Iconic iOS Amber/Orange */
+  --btn-op-hover: #ffb03a;
+  --btn-op-active: #e08b04;
+  --btn-op-text: #ffffff;
+
+  /* Display Text Colors */
+  --text-current: #ffffff;
+  --text-previous: #8b8f9f;
+
+  /* Typography & Layout */
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+  --radius-card: 32px;
+  --radius-btn: 20px;
+  --gap: 12px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-page);
+  font-family: var(--font-family);
+  padding: 1.5rem;
+  user-select: none; /* Prevents accidental text selection when clicking buttons fast */
+}
+
+/* ==========================================================================
+   2. CALCULATOR CARD CONTAINER
+   ========================================================================== */
+.calculator {
+  width: 100%;
+  max-width: 340px;
+  background-color: var(--bg-calculator);
+  border-radius: var(--radius-card);
+  padding: 24px 20px 24px 20px;
+  box-shadow: 
+    0 24px 48px -12px rgba(0, 0, 0, 0.7),
+    0 0 0 1px rgba(255, 255, 255, 0.06); /* Subtle glass border */
+  display: flex;
+  flex-direction: column;
+}
+
+/* ==========================================================================
+   3. SCREEN DISPLAY (Current & Previous Operands)
+   ========================================================================== */
+.calculator-display {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+  padding: 1.25rem 0.75rem;
+  min-height: 110px;
+  word-break: break-all;
+  overflow: hidden;
+}
+
+/* Secondary history display (e.g. "125 ×") */
+.previous-operand {
+  font-size: 1rem;
+  color: var(--text-previous);
+  min-height: 1.4rem;
+  letter-spacing: 0.5px;
+  font-weight: 400;
+  transition: color 0.2s ease;
+}
+
+/* Primary result / typing display */
+.current-operand {
+  font-size: 2.75rem;
+  font-weight: 300;
+  color: var(--text-current);
+  letter-spacing: -0.5px;
+  line-height: 1.1;
+  transition: transform 0.1s ease;
+}
+
+/* ==========================================================================
+   4. KEYPAD GRID (CSS GRID LAYOUT)
+   ========================================================================== */
+/*
+ * CSS GRID EXPLANATION:
+ * - display: grid activates grid formatting.
+ * - grid-template-columns: repeat(4, 1fr) creates exactly 4 columns of equal width.
+ * - gap: 12px adds consistent vertical and horizontal spacing between every key.
+ */
+.calculator-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--gap);
+}
+
+/* General Button Styles */
+.btn {
+  height: 64px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  border-radius: var(--radius-btn);
+  font-size: 1.4rem;
+  font-weight: 500;
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 
+    background-color 0.15s ease, 
+    transform 0.08s ease, 
+    box-shadow 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Tactile Click Feel (scale down slightly when pressed) */
+.btn:active {
+  transform: scale(0.93);
+}
+
+/* Number Keys (0-9) */
+.btn-number {
+  background-color: var(--btn-num-bg);
+  color: var(--btn-num-text);
+}
+
+.btn-number:hover {
+  background-color: var(--btn-num-hover);
+}
+
+.btn-number:active {
+  background-color: var(--btn-num-active);
+}
+
+/* Function Keys (AC, ±, %) */
+.btn-function {
+  background-color: var(--btn-func-bg);
+  color: var(--btn-func-text);
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+.btn-function:hover {
+  background-color: var(--btn-func-hover);
+}
+
+.btn-function:active {
+  background-color: var(--btn-func-active);
+}
+
+/* Operator Keys (÷, ×, −, +, =) */
+.btn-operator {
+  background-color: var(--btn-op-bg);
+  color: var(--btn-op-text);
+  font-size: 1.6rem;
+  font-weight: 400;
+}
+
+.btn-operator:hover {
+  background-color: var(--btn-op-hover);
+}
+
+.btn-operator:active {
+  background-color: var(--btn-op-active);
+}
+
+/* Active Operator Indicator (highlighted when selected) */
+.btn-operator.is-active {
+  background-color: #ffffff;
+  color: var(--btn-op-bg);
+}
+
+/* The '0' Key: Spans 2 grid columns (like on iOS) */
+.btn-zero {
+  grid-column: span 2;
+  justify-content: flex-start;
+  padding-left: 26px;
+}
+
+/* Responsive adjustment for extra small mobile screens */
+@media (max-width: 360px) {
+  .calculator {
+    padding: 16px 12px;
+  }
+  .btn {
+    height: 56px;
+    font-size: 1.2rem;
+  }
+  .current-operand {
+    font-size: 2.2rem;
+  }
+}
